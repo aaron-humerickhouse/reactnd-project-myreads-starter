@@ -1,0 +1,42 @@
+* data
+- props
+
+HomePage
+* Currently Reading List
+* Want to Read List
+* Read List
+- Page Header
+- Currently Reading Book List
+- Want to Read Book List
+- Read Book List
+- addToList()
+
+SearchPage
+* Search List
+- Page Header
+- Search Page
+- Search Results
+
+Book List
+- Title (optional)
+- Book array
+
+Book
+- Book
+
+Page Header
+- Title
+- Icon
+- Icon Location
+
+Menu
+- Title
+- Option List
+
+Option
+- Text
+- addToList() - list of books to add to
+- selected
+
+Search Bar
+- onChange() - list of books to show in list

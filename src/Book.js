@@ -14,13 +14,10 @@ class Book extends React.Component {
     let shelf
 
     if(this.bookInShelf(this.props.shelves.read)) {
-      console.log(`${this.props.book.title} is in read shelf`)
       shelf = constants.READ
     } else if(this.bookInShelf(this.props.shelves.wantToRead)) {
-      console.log(`${this.props.book.title} is in want to read shelf`)
       shelf = constants.WANT_TO_READ
     } else if(this.bookInShelf(this.props.shelves.currentlyReading)) {
-      console.log(`${this.props.book.title} is in currently reading shelf`)
       shelf = constants.CURRENTLY_READING
     }
 
@@ -34,8 +31,6 @@ class Book extends React.Component {
   }
 
   bookInShelf = (shelf) => {
-    console.log(shelf)
-    console.log(this.props.book.id)
     return shelf.filter(id => this.props.book.id === id).length > 0
   }
 

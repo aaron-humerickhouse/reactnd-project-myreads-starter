@@ -4,39 +4,22 @@ import PropTypes from 'prop-types'
 
 import Header from './Header'
 import BookShelf from './BookShelf'
-import * as BooksApi from './BooksAPI'
 
 import * as Constants from './constants'
+import * as customPropTypes from './types'
 
 class HomePage extends React.Component {
   state = {
     allBooks: []
   }
 
-  componentDidMount() {
-    this.getBooks()
-  }
-
-  getBooks = () => {
-    BooksApi.getAll()
-      .then((books) => {
-        this.setState(() => ({
-          allBooks: books
-        }))
-
-        books.forEach(book => {
-          this.props.addBookToShelf(book, book.shelf)
-        })
-      })
-  }
-
   updateSuccessMessage = (message) => {
     this.props.updateSuccessMessage(message)
-    this.getBooks()
+    this.props.getBooks()
   }
 
   filterBooks = (shelf) => (
-    this.state.allBooks.filter( book => book.shelf === shelf)
+    this.props.allBooks.filter( book => book.shelf === shelf)
   )
 
   hasSuccessMessage = () => (
@@ -88,7 +71,9 @@ HomePage.propTypes = {
   successMessage: PropTypes.string.isRequired,
   updateSuccessMessage: PropTypes.func.isRequired,
   addBookToShelf: PropTypes.func.isRequired,
-  shelves: PropTypes.object
+  shelves: PropTypes.object,
+  allBooks: PropTypes.arrayOf(customPropTypes.bookPropType),
+  getBooks: PropTypes.func.isRequired
 }
 
 export default HomePage

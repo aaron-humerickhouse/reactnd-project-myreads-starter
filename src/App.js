@@ -5,6 +5,7 @@ import { Route } from 'react-router-dom'
 import HomePage from './HomePage'
 import SearchPage from './SearchPage'
 import * as constants from './constants'
+import * as BooksApi from './BooksAPI'
 
 class BooksApp extends React.Component {
   state = {
@@ -14,7 +15,24 @@ class BooksApp extends React.Component {
       read: [],
       wantToRead: [],
       currentlyReading: []
-    }
+    },
+    allBooks: []
+  }
+  componentDidMount() {
+    this.getBooks()
+  }
+
+  getBooks = () => {
+    BooksApi.getAll()
+      .then((books) => {
+        this.setState(() => ({
+          allBooks: books
+        }))
+
+        books.forEach(book => {
+          this.addBookToShelf(book, book.shelf)
+        })
+      })
   }
 
   updateSuccessMessage = (message) => {
@@ -77,6 +95,7 @@ class BooksApp extends React.Component {
             updateSuccessMessage={this.updateSuccessMessage} successMessage={this.state.successMessage}
             updateErrorMessage={this.updateErrorMessage} errorMessage={this.state.errorMessage}
             shelves={this.state.shelves} addBookToShelf={this.addBookToShelf}
+            allBooks={this.state.allBooks} getBooks={this.getBooks}
           />
         }/>
         <Route path="/search" render={() =>

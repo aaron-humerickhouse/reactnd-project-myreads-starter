@@ -11,7 +11,12 @@ class BookList extends React.Component {
           Array.isArray(this.props.books) && (
             this.props.books.map(book => (
               <li key={book.id}>
-                <Book book={book} updateSuccessMessage={this.props.updateSuccessMessage} />
+                <Book
+                  addBookToShelf={this.props.addBookToShelf}
+                  shelves={this.props.shelves}
+                  book={book}
+                  updateSuccessMessage={this.props.updateSuccessMessage}
+                />
               </li>
             ))
           )
@@ -29,7 +34,9 @@ BookList.propTypes = {
       items: PropTypes.array
     })
   ]).isRequired,
-  updateSuccessMessage: PropTypes.func
+  updateSuccessMessage: PropTypes.func,
+  shelves: PropTypes.object,
+  addBookToShelf: PropTypes.func.isRequired
 }
 
 export default BookList

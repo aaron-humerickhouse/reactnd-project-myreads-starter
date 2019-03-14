@@ -39,12 +39,13 @@ class Menu extends React.Component {
       .then(() => {
         this.props.updateSuccessMessage(this.getActionMessage(book, shelf))
       })
+    this.props.addBookToShelf(book, shelf)
   }
 
   render() {
     return(
       <div className="book-shelf-changer">
-        <select value={this.props.book.shelf || Constants.NONE} onChange={this.handleSelect}>
+        <select value={this.props.book.shelf || this.props.shelf || Constants.NONE} onChange={this.handleSelect}>
           <option value="move" disabled>Move to...</option>
           <option value={Constants.CURRENTLY_READING}>Currently Reading</option>
           <option value={Constants.WANT_TO_READ}>Want to Read</option>
@@ -58,7 +59,9 @@ class Menu extends React.Component {
 
 Menu.propTypes = {
   book: CustomPropTypes.bookPropType.isRequired,
-  updateSuccessMessage: PropTypes.func
+  updateSuccessMessage: PropTypes.func,
+  shelf: PropTypes.string,
+  addBookToShelf: PropTypes.func.isRequired
 }
 
 export default Menu;

@@ -3,8 +3,42 @@ import PropTypes from 'prop-types'
 
 import Menu from './Menu';
 import * as customPropTypes from './types';
+import * as constants from './constants';
 
 class Book extends React.Component {
+  state = {
+    shelf: ''
+  }
+
+  setShelf = () => {
+    let shelf
+
+    if(this.bookInShelf(this.props.shelves.read)) {
+      console.log(`${this.props.book.title} is in read shelf`)
+      shelf = constants.READ
+    } else if(this.bookInShelf(this.props.shelves.wantToRead)) {
+      console.log(`${this.props.book.title} is in want to read shelf`)
+      shelf = constants.WANT_TO_READ
+    } else if(this.bookInShelf(this.props.shelves.currentlyReading)) {
+      console.log(`${this.props.book.title} is in currently reading shelf`)
+      shelf = constants.CURRENTLY_READING
+    }
+
+    this.setState(() => ({
+      shelf: shelf
+    }))
+  }
+
+  componentDidMount = () => {
+    this.setShelf()
+  }
+
+  bookInShelf = (shelf) => {
+    console.log(shelf)
+    console.log(this.props.book.id)
+    return shelf.filter(id => this.props.book.id === id).length > 0
+  }
+
   render() {
     const { book } = this.props
 
@@ -28,7 +62,12 @@ class Book extends React.Component {
                 No Cover Available
               </div>
           }
-          <Menu book={book} updateSuccessMessage={this.props.updateSuccessMessage} />
+          <Menu
+            addBookToShelf={this.props.addBookToShelf}
+            shelf={this.state.shelf}
+            book={book}
+            updateSuccessMessage={this.props.updateSuccessMessage}
+          />
         </div>
         <div className="book-title">{book.title}</div>
         <div className="book-authors">
@@ -47,7 +86,9 @@ class Book extends React.Component {
 
 Book.propTypes = {
   book: customPropTypes.bookPropType.isRequired,
-  updateSuccessMessage: PropTypes.func
+  updateSuccessMessage: PropTypes.func,
+  shelves: PropTypes.object,
+  addBookToShelf: PropTypes.func.isRequired
 }
 
 export default Book

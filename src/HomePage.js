@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import PropType from 'prop-types'
+import PropTypes from 'prop-types'
 
 import Header from './Header'
 import BookShelf from './BookShelf'
@@ -23,6 +23,10 @@ class HomePage extends React.Component {
         this.setState(() => ({
           allBooks: books
         }))
+
+        books.forEach(book => {
+          this.props.addBookToShelf(book, book.shelf)
+        })
       })
   }
 
@@ -54,14 +58,20 @@ class HomePage extends React.Component {
           <BookShelf
             books={this.filterBooks(Constants.CURRENTLY_READING)} title="Currently Reading"
             updateSuccessMessage={this.updateSuccessMessage}
+            shelves={this.props.shelves}
+            addBookToShelf={this.props.addBookToShelf}
           />
           <BookShelf
             books={this.filterBooks(Constants.WANT_TO_READ)} title="Want to Read"
             updateSuccessMessage={this.updateSuccessMessage}
+            shelves={this.props.shelves}
+            addBookToShelf={this.props.addBookToShelf}
           />
           <BookShelf
             books={this.filterBooks(Constants.READ)} title="READ"
             updateSuccessMessage={this.updateSuccessMessage}
+            shelves={this.props.shelves}
+            addBookToShelf={this.props.addBookToShelf}
           />
         </div>
         <div className="open-search">
@@ -75,8 +85,10 @@ class HomePage extends React.Component {
 }
 
 HomePage.propTypes = {
-  successMessage: PropType.string.isRequired,
-  updateSuccessMessage: PropType.func.isRequired
+  successMessage: PropTypes.string.isRequired,
+  updateSuccessMessage: PropTypes.func.isRequired,
+  addBookToShelf: PropTypes.func.isRequired,
+  shelves: PropTypes.object
 }
 
 export default HomePage

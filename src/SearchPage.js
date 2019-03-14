@@ -80,6 +80,8 @@ class SearchPage extends React.Component {
             <SearchResults
               searchResults={this.state.searchResults}
               updateSuccessMessage={this.updateSuccessMessage}
+              shelves={this.props.shelves}
+              addBookToShelf={this.props.addBookToShelf}
             />
           )
         }
@@ -89,11 +91,12 @@ class SearchPage extends React.Component {
 }
 
 SearchPage.propTypes = {
-  updateSuccessMessage: PropTypes.func,
-  successMessage: PropTypes.string,
-  updateErrorMessage: PropTypes.func,
-  errorMessage: PropTypes.string,
-  query: PropTypes.string
+  updateSuccessMessage: PropTypes.func.isRequired,
+  successMessage: PropTypes.string.isRequired,
+  updateErrorMessage: PropTypes.func.isRequired,
+  errorMessage: PropTypes.string.isRequired,
+  shelves: PropTypes.object.isRequired,
+  addBookToShelf: PropTypes.func.isRequired
 }
 
 export default SearchPage

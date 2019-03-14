@@ -1,5 +1,5 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import Menu from './Menu';
 import * as customPropTypes from './types';
@@ -7,61 +7,76 @@ import * as constants from './constants';
 
 class Book extends React.Component {
   state = {
-    shelf: ''
+    shelf: '',
   }
 
   setShelf = () => {
-    let shelf
+    let shelf;
 
-    if(this.bookInShelf(this.props.shelves.read)) {
-      shelf = constants.READ
-    } else if(this.bookInShelf(this.props.shelves.wantToRead)) {
-      shelf = constants.WANT_TO_READ
-    } else if(this.bookInShelf(this.props.shelves.currentlyReading)) {
-      shelf = constants.CURRENTLY_READING
+    const { shelves } = this.props;
+
+    if (this.bookInShelf(shelves.read)) {
+      shelf = constants.READ;
+    } else if (this.bookInShelf(shelves.wantToRead)) {
+      shelf = constants.WANT_TO_READ;
+    } else if (this.bookInShelf(shelves.currentlyReading)) {
+      shelf = constants.CURRENTLY_READING;
     }
 
     this.setState(() => ({
-      shelf: shelf
-    }))
+      shelf,
+    }));
   }
 
   componentDidMount = () => {
-    this.setShelf()
+    this.setShelf();
   }
 
   bookInShelf = (shelf) => {
-    return shelf.filter(id => this.props.book.id === id).length > 0
+    const { book } = this.props;
+
+    return shelf.filter(id => (
+      book.id === id
+    ).length) > 0;
   }
 
   render() {
-    const { book } = this.props
+    const { book, addBookToShelf, updateSuccessMessage } = this.props;
+    const { shelf } = this.state;
 
-    return(
+    return (
       <div className="book">
         <div className="book-top">
           {
-            (book.imageLinks && book.imageLinks.smallThumbnail) ?
-              <div className="book-cover" style={{
-                width: 128,
-                height: 193,
-                backgroundImage: `url(${book.imageLinks.smallThumbnail})`
-              }} />
-              :
-              <div className="book-cover" style={{
-                width: 128,
-                height: 193,
-                textAlign: "center",
-                padding: "70px 0"
-              }}>
+            (book.imageLinks && book.imageLinks.smallThumbnail)
+              ? (
+                <div
+                  className="book-cover"
+                  style={{
+                    width: 128,
+                    height: 193,
+                    backgroundImage: `url(${book.imageLinks.smallThumbnail})`,
+                  }}
+                />
+              )
+              : (
+                <div
+                  className="book-cover"
+                  style={{
+                    width: 128,
+                    height: 193,
+                    textAlign: 'center',
+                    padding: '70px 0',
+                  }}
+                >
                 No Cover Available
-              </div>
-          }
+                </div>
+              )}
           <Menu
-            addBookToShelf={this.props.addBookToShelf}
-            shelf={this.state.shelf}
+            addBookToShelf={addBookToShelf}
+            shelf={shelf}
             book={book}
-            updateSuccessMessage={this.props.updateSuccessMessage}
+            updateSuccessMessage={updateSuccessMessage}
           />
         </div>
         <div className="book-title">{book.title}</div>
@@ -70,12 +85,12 @@ class Book extends React.Component {
             book.authors && (
               book.authors
                 .map(author => <span key={author}>{author}</span>)
-                .reduce((acc, x) => acc === null ? [x] : [acc, (<br key={x} />), x], null)
+                .reduce((acc, x) => (acc === null ? [x] : [acc, (<br key={x} />), x]), null)
             )
           }
         </div>
       </div>
-    )
+    );
   }
 }
 
@@ -83,7 +98,7 @@ Book.propTypes = {
   book: customPropTypes.bookPropType.isRequired,
   updateSuccessMessage: PropTypes.func,
   shelves: PropTypes.object,
-  addBookToShelf: PropTypes.func.isRequired
-}
+  addBookToShelf: PropTypes.func.isRequired,
+};
 
-export default Book
+export default Book;

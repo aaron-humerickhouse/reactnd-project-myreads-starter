@@ -1,69 +1,75 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
-import PropTypes from 'prop-types'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-import Header from './Header'
-import BookShelf from './BookShelf'
+import Header from './Header';
+import BookShelf from './BookShelf';
 
-import * as Constants from './constants'
-import * as customPropTypes from './types'
+import * as Constants from './constants';
+import * as customPropTypes from './types';
 
 class HomePage extends React.Component {
-  state = {
-    allBooks: []
-  }
-
   updateSuccessMessage = (message) => {
-    this.props.updateSuccessMessage(message)
-    this.props.getBooks()
+    const { updateSuccessMessage, getBooks } = this.props;
+    updateSuccessMessage(message);
+    getBooks();
   }
 
-  filterBooks = (shelf) => (
-    this.props.allBooks.filter( book => book.shelf === shelf)
-  )
+  filterBooks = (shelf) => {
+    const { allBooks } = this.props;
+    return allBooks.filter(book => book.shelf === shelf);
+  }
 
-  hasSuccessMessage = () => (
-    this.props.successMessage !== ''
-  )
+  hasSuccessMessage = () => {
+    const { successMessage } = this.props;
+    return successMessage !== '';
+  }
 
   render() {
-    return(
+    const { successMessage, shelves, addBookToShelf } = this.props;
+    return (
       <div>
-        <Header title="My Reads"/>
+        <Header title="My Reads" />
         <div className="list-books-content">
           {this.hasSuccessMessage() && (
-            <div className="success" style={{
-              padding: "20px 10px 20px"
-            }}>
-              {this.props.successMessage}
+            <div
+              className="success"
+              style={{
+                padding: '20px 10px 20px',
+              }}
+            >
+              {successMessage}
             </div>
           )}
           <BookShelf
-            books={this.filterBooks(Constants.CURRENTLY_READING)} title="Currently Reading"
+            books={this.filterBooks(Constants.CURRENTLY_READING)}
+            title="Currently Reading"
             updateSuccessMessage={this.updateSuccessMessage}
-            shelves={this.props.shelves}
-            addBookToShelf={this.props.addBookToShelf}
+            shelves={shelves}
+            addBookToShelf={addBookToShelf}
           />
           <BookShelf
-            books={this.filterBooks(Constants.WANT_TO_READ)} title="Want to Read"
+            books={this.filterBooks(Constants.WANT_TO_READ)}
+            title="Want to Read"
             updateSuccessMessage={this.updateSuccessMessage}
-            shelves={this.props.shelves}
-            addBookToShelf={this.props.addBookToShelf}
+            shelves={shelves}
+            addBookToShelf={addBookToShelf}
           />
           <BookShelf
-            books={this.filterBooks(Constants.READ)} title="READ"
+            books={this.filterBooks(Constants.READ)}
+            title="READ"
             updateSuccessMessage={this.updateSuccessMessage}
-            shelves={this.props.shelves}
-            addBookToShelf={this.props.addBookToShelf}
+            shelves={shelves}
+            addBookToShelf={addBookToShelf}
           />
         </div>
         <div className="open-search">
-          <Link to="/search" >
-            <button />
+          <Link to="/search">
+            <button type="button" />
           </Link>
         </div>
       </div>
-    )
+    );
   }
 }
 
@@ -73,7 +79,7 @@ HomePage.propTypes = {
   addBookToShelf: PropTypes.func.isRequired,
   shelves: PropTypes.object,
   allBooks: PropTypes.arrayOf(customPropTypes.bookPropType),
-  getBooks: PropTypes.func.isRequired
-}
+  getBooks: PropTypes.func.isRequired,
+};
 
-export default HomePage
+export default HomePage;

@@ -1,35 +1,35 @@
-import React from 'react'
-import * as customPropTypes from './types'
-import PropTypes from 'prop-types'
-import BookList from './BookList'
+import React from 'react';
+import PropTypes from 'prop-types';
+import * as customPropTypes from './types';
+import BookList from './BookList';
 
-class SearchResults extends React.Component {
-
-  render() {
-    return(
-      <div className="search-books-results">
-        <BookList
-          books={this.props.searchResults}
-          shelves={this.props.shelves}
-          updateSuccessMessage={this.props.updateSuccessMessage}
-          addBookToShelf={this.props.addBookToShelf}
-        />
-      </div>
-    )
-  }
-}
+const SearchResults = ({
+  searchResults,
+  shelves,
+  updateSuccessMessage,
+  addBookToShelf,
+}) => (
+  <div className="search-books-results">
+    <BookList
+      books={searchResults}
+      shelves={shelves}
+      updateSuccessMessage={updateSuccessMessage}
+      addBookToShelf={addBookToShelf}
+    />
+  </div>
+);
 
 SearchResults.propTypes = {
   searchResults: PropTypes.oneOfType([
     PropTypes.arrayOf(customPropTypes.bookPropType),
     PropTypes.shape({
       error: PropTypes.string,
-      items: PropTypes.array
-    })
+      items: PropTypes.array,
+    }),
   ]).isRequired,
   updateSuccessMessage: PropTypes.func,
   shelves: PropTypes.object.isRequired,
-  addBookToShelf: PropTypes.func.isRequired
-}
+  addBookToShelf: PropTypes.func.isRequired,
+};
 
-export default SearchResults
+export default SearchResults;

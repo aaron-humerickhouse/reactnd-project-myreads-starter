@@ -1,72 +1,85 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import SearchBar from './SearchBar'
-import SearchResults from './SearchResults'
-import * as BooksApi from './BooksAPI'
+import SearchBar from './SearchBar';
+import SearchResults from './SearchResults';
+import * as BooksApi from './BooksAPI';
 
 class SearchPage extends React.Component {
   state = {
     query: '',
-    searchResults: []
+    searchResults: [],
   }
 
-  updateSearchResults(query) {
-    BooksApi.search(query)
-    .then((books) => {
-      if(Array.isArray(books)) {
-        this.setState(() => ({
-          searchResults: books
-        }))
-        this.props.updateErrorMessage('')
-
-      } else {
-        this.props.updateErrorMessage('No Results found')
-        this.clearSearchResults()
-      }
-    })
+  hasErrorMessage = () => {
+    const { errorMessage } = this.props;
+    return errorMessage !== '';
   }
 
-  clearSearchResults() {
-    this.setState(() => ({
-      searchResults: []
-    }))
+  hasSuccessMessage = () => {
+    const { successMessage } = this.props;
+    return successMessage !== '';
   }
-
-  hasErrorMessage = () => (
-    this.props.errorMessage !== ''
-  )
-
-  hasSuccessMessage = () => (
-    this.props.successMessage !== ''
-  )
 
   updateSuccessMessage = (message) => {
-    this.props.updateSuccessMessage(message)
-    this.updateSearchResults(this.state.query)
+    const { updateSuccessMessage } = this.props;
+    const { query } = this.state;
+
+    updateSuccessMessage(message);
+    this.updateSearchResults(query);
   }
 
   updateQuery = (query) => {
     this.setState(() => ({
-      query: query
-    }))
+      query,
+    }));
+  }
+
+  clearSearchResults() {
+    this.setState(() => ({
+      searchResults: [],
+    }));
+  }
+
+  updateSearchResults(query) {
+    const { updateErrorMessage } = this.props;
+    BooksApi.search(query)
+      .then((books) => {
+        if (Array.isArray(books)) {
+          this.setState(() => ({
+            searchResults: books,
+          }));
+          updateErrorMessage('');
+        } else {
+          updateErrorMessage('No Results found');
+          this.clearSearchResults();
+        }
+      });
   }
 
   render() {
-    this.updateSearchResults = this.updateSearchResults.bind(this)
-    this.clearSearchResults = this.clearSearchResults.bind(this)
+    this.updateSearchResults = this.updateSearchResults.bind(this);
+    this.clearSearchResults = this.clearSearchResults.bind(this);
 
-    return(
+    const {
+      successMessage,
+      errorMessage,
+      shelves,
+      addBookToShelf,
+    } = this.props;
+    const { searchResults } = this.state;
+
+    return (
       <div>
         <SearchBar
           updateSearchResults={this.updateSearchResults}
           clearSearchResults={this.clearSearchResults}
           updateQuery={this.updateQuery}
-          />
+        />
         {
           this.hasSuccessMessage() && (
             <div className="success">
-              {this.props.successMessage}
+              {successMessage}
             </div>
 
           )
@@ -74,19 +87,19 @@ class SearchPage extends React.Component {
         {
           this.hasErrorMessage() ? (
             <div className="error">
-              {this.props.errorMessage}
+              {errorMessage}
             </div>
           ) : (
             <SearchResults
-              searchResults={this.state.searchResults}
+              searchResults={searchResults}
               updateSuccessMessage={this.updateSuccessMessage}
-              shelves={this.props.shelves}
-              addBookToShelf={this.props.addBookToShelf}
+              shelves={shelves}
+              addBookToShelf={addBookToShelf}
             />
           )
         }
       </div>
-    )
+    );
   }
 }
 
@@ -96,7 +109,7 @@ SearchPage.propTypes = {
   updateErrorMessage: PropTypes.func.isRequired,
   errorMessage: PropTypes.string.isRequired,
   shelves: PropTypes.object.isRequired,
-  addBookToShelf: PropTypes.func.isRequired
-}
+  addBookToShelf: PropTypes.func.isRequired,
+};
 
-export default SearchPage
+export default SearchPage;

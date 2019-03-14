@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
-export const bookPropType = PropTypes.shape({
+const bookPropType = PropTypes.shape({
   allowAnonLogging: PropTypes.bool,
   authors: PropTypes.arrayOf(PropTypes.string),
   averageRating: PropTypes.number,
@@ -11,11 +11,11 @@ export const bookPropType = PropTypes.shape({
   id: PropTypes.string,
   imageLinks: PropTypes.shape({
     smallThumbnail: PropTypes.string,
-    thumbnail: PropTypes.string
+    thumbnail: PropTypes.string,
   }),
   industryIdentifiers: PropTypes.arrayOf(PropTypes.shape({
     type: PropTypes.string,
-    identifier: PropTypes.string
+    identifier: PropTypes.string,
   })),
   infoLink: PropTypes.string,
   language: PropTypes.string,
@@ -23,7 +23,7 @@ export const bookPropType = PropTypes.shape({
   pageCount: PropTypes.number,
   panelizationSummary: PropTypes.shape({
     containsEpubBubbles: PropTypes.bool,
-    containsImageBubbles: PropTypes.bool
+    containsImageBubbles: PropTypes.bool,
   }),
   previewLink: PropTypes.string,
   printType: PropTypes.string,
@@ -32,9 +32,11 @@ export const bookPropType = PropTypes.shape({
   ratingsCount: PropTypes.number,
   readingModes: PropTypes.shape({
     text: PropTypes.bool,
-    image: PropTypes.bool
+    image: PropTypes.bool,
   }),
   shelf: PropTypes.string,
   subtitle: PropTypes.string,
   title: PropTypes.string,
 });
+
+export default bookPropType;

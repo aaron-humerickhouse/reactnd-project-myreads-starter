@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import BookList from './BookList';
-import * as customPropTypes from './types';
+import bookPropType from './types';
 
 const BookShelf = ({
   title,
@@ -24,7 +24,7 @@ const BookShelf = ({
 );
 
 BookShelf.propTypes = {
-  books: PropTypes.arrayOf(customPropTypes.bookPropType).isRequired,
+  books: PropTypes.arrayOf(bookPropType).isRequired,
   title: PropTypes.string,
   updateSuccessMessage: PropTypes.func,
   shelves: PropTypes.object.isRequired,

@@ -6,7 +6,7 @@ import Header from './Header';
 import BookShelf from './BookShelf';
 
 import * as Constants from './constants';
-import * as customPropTypes from './types';
+import bookPropType from './types';
 
 class HomePage extends React.Component {
   updateSuccessMessage = (message) => {
@@ -78,7 +78,7 @@ HomePage.propTypes = {
   updateSuccessMessage: PropTypes.func.isRequired,
   addBookToShelf: PropTypes.func.isRequired,
   shelves: PropTypes.object,
-  allBooks: PropTypes.arrayOf(customPropTypes.bookPropType),
+  allBooks: PropTypes.arrayOf(bookPropType),
   getBooks: PropTypes.func.isRequired,
 };
 

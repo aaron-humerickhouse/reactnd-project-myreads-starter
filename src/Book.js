@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Menu from './Menu';
-import * as customPropTypes from './types';
+import bookPropType from './types';
 import * as constants from './constants';
 
 class Book extends React.Component {
@@ -95,7 +95,7 @@ class Book extends React.Component {
 }
 
 Book.propTypes = {
-  book: customPropTypes.bookPropType.isRequired,
+  book: bookPropType.isRequired,
   updateSuccessMessage: PropTypes.func,
   shelves: PropTypes.object,
   addBookToShelf: PropTypes.func.isRequired,

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as customPropTypes from './types';
+import bookPropType from './types';
 import BookList from './BookList';
 
 const SearchResults = ({
@@ -21,7 +21,7 @@ const SearchResults = ({
 
 SearchResults.propTypes = {
   searchResults: PropTypes.oneOfType([
-    PropTypes.arrayOf(customPropTypes.bookPropType),
+    PropTypes.arrayOf(bookPropType),
     PropTypes.shape({
       error: PropTypes.string,
       items: PropTypes.array,

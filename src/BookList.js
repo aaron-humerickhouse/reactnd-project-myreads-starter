@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Book from './Book';
-import * as customPropTypes from './types';
+import bookPropType from './types';
 
 const BookList = ({
   books,
@@ -31,7 +31,7 @@ const BookList = ({
 
 BookList.propTypes = {
   books: PropTypes.oneOfType([
-    PropTypes.arrayOf(customPropTypes.bookPropType),
+    PropTypes.arrayOf(bookPropType),
     PropTypes.shape({
       error: PropTypes.string,
       items: PropTypes.array,

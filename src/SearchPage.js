@@ -7,6 +7,7 @@ import * as BooksApi from './BooksAPI'
 
 class SearchPage extends React.Component {
   state = {
+    query: '',
     searchResults: []
   }
 
@@ -40,6 +41,17 @@ class SearchPage extends React.Component {
     this.props.successMessage !== ''
   )
 
+  updateSuccessMessage = (message) => {
+    this.props.updateSuccessMessage(message)
+    this.updateSearchResults(this.state.query)
+  }
+
+  updateQuery = (query) => {
+    this.setState(() => ({
+      query: query
+    }))
+  }
+
   render() {
     this.updateSearchResults = this.updateSearchResults.bind(this)
     this.clearSearchResults = this.clearSearchResults.bind(this)
@@ -49,6 +61,7 @@ class SearchPage extends React.Component {
         <SearchBar
           updateSearchResults={this.updateSearchResults}
           clearSearchResults={this.clearSearchResults}
+          updateQuery={this.updateQuery}
           />
         {
           this.hasSuccessMessage() && (
@@ -66,7 +79,7 @@ class SearchPage extends React.Component {
           ) : (
             <SearchResults
               searchResults={this.state.searchResults}
-              updateSuccessMessage={this.props.updateSuccessMessage}
+              updateSuccessMessage={this.updateSuccessMessage}
             />
           )
         }
@@ -79,7 +92,8 @@ SearchPage.propTypes = {
   updateSuccessMessage: PropTypes.func,
   successMessage: PropTypes.string,
   updateErrorMessage: PropTypes.func,
-  errorMessage: PropTypes.string
+  errorMessage: PropTypes.string,
+  query: PropTypes.string
 }
 
 export default SearchPage

@@ -22,14 +22,13 @@ class BookList extends React.Component {
 }
 
 BookList.propTypes = {
-  // books: PropTypes.oneOf([
-  //   PropTypes.arrayOf(customPropTypes.bookPropType),
-  //   PropTypes.shape({
-  //     error: PropTypes.string,
-  //     items: PropTypes.array
-  //   })
-  // ]).isRequired,
-  books: PropTypes.any.isRequired,
+  books: PropTypes.oneOfType([
+    PropTypes.arrayOf(customPropTypes.bookPropType),
+    PropTypes.shape({
+      error: PropTypes.string,
+      items: PropTypes.array
+    })
+  ]).isRequired,
   updateSuccessMessage: PropTypes.func
 }
 

@@ -11,12 +11,23 @@ class Book extends React.Component {
     return(
       <div className="book">
         <div className="book-top">
-          <div className="book-cover" style={{
-              width: 128,
-              height: 193,
-              backgroundImage: `url(${book.imageLinks.smallThumbnail})`
-            }}>
-          </div>
+          {
+            (book.imageLinks && book.imageLinks.smallThumbnail) ?
+              <div className="book-cover" style={{
+                width: 128,
+                height: 193,
+                backgroundImage: `url(${book.imageLinks.smallThumbnail})`
+              }} />
+              :
+              <div className="book-cover" style={{
+                width: 128,
+                height: 193,
+                textAlign: "center",
+                padding: "70px 0"
+              }}>
+                No Cover Available
+              </div>
+          }
           <Menu book={book} updateSuccessMessage={this.props.updateSuccessMessage} />
         </div>
         <div className="book-title">{book.title}</div>

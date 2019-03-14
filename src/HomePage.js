@@ -20,7 +20,6 @@ class HomePage extends React.Component {
   getBooks = () => {
     BooksApi.getAll()
       .then((books) => {
-        console.log(books)
         this.setState(() => ({
           allBooks: books
         }))

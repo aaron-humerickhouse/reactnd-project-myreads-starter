@@ -1,6 +1,6 @@
 import React from 'react'
 import * as customPropTypes from './types'
-import PropTypes from 'prop-types'
+import PropType from 'prop-types'
 import BookList from './BookList'
 
 class SearchResults extends React.Component {
@@ -15,15 +15,14 @@ class SearchResults extends React.Component {
 }
 
 SearchResults.propTypes = {
-  searchResults: PropTypes.any.isRequired,
-  // searchResults: PropTypes.oneOf([
-  //   PropTypes.arrayOf(customPropTypes.bookPropType),
-  //   PropTypes.shape({
-  //     error: PropTypes.string,
-  //     items: PropTypes.array
-  //   })
-  // ]).isRequired,
-  updateSuccessMessage: PropTypes.func
+  searchResults: PropType.oneOfType([
+    PropType.arrayOf(customPropTypes.bookPropType),
+    PropType.shape({
+      error: PropType.string,
+      items: PropType.array
+    })
+  ]).isRequired,
+  updateSuccessMessage: PropType.func
 }
 
 export default SearchResults

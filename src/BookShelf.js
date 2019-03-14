@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import PropType from 'prop-types'
 import BookList from './BookList'
 import * as customPropTypes from './types'
 
@@ -9,7 +9,7 @@ class BookShelf extends React.Component {
       <div className="bookshelf">
         <h2 className="bookshelf-title">{this.props.title}</h2>
         <div className="bookshelf-books">
-          <BookList books={this.props.books} />
+          <BookList books={this.props.books} updateSuccessMessage={this.props.updateSuccessMessage} />
         </div>
       </div>
     )
@@ -17,8 +17,9 @@ class BookShelf extends React.Component {
 }
 
 BookList.propTypes = {
-  books: PropTypes.arrayOf(customPropTypes.bookPropType).isRequired,
-  title: PropTypes.string
+  books: PropType.arrayOf(customPropTypes.bookPropType).isRequired,
+  title: PropType.string,
+  updateSuccessMessage: PropType.func
 }
 
 export default BookShelf

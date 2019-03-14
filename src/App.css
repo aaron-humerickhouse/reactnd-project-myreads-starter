@@ -201,5 +201,9 @@ button:active {
   padding: 80px 10px 20px;
   background: #fadbd8;
   text-align: center;
-
+}
+.success {
+  padding: 80px 10px 20px;
+  background: #ccffcc;
+  text-align: center;
 }

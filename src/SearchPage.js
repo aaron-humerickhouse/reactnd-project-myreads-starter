@@ -1,11 +1,12 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import SearchBar from './SearchBar'
 import SearchResults from './SearchResults'
 import * as BooksApi from './BooksAPI'
 
 class SearchPage extends React.Component {
   state = {
-    error: '',
     searchResults: []
   }
 
@@ -14,13 +15,12 @@ class SearchPage extends React.Component {
     .then((books) => {
       if(Array.isArray(books)) {
         this.setState(() => ({
-          searchResults: books,
-          error: ''
+          searchResults: books
         }))
+        this.props.updateErrorMessage('')
+
       } else {
-        this.setState(() => ({
-          error: `No Results Found`
-        }))
+        this.props.updateErrorMessage('No Results found')
         this.clearSearchResults()
       }
     })
@@ -32,8 +32,12 @@ class SearchPage extends React.Component {
     }))
   }
 
-  hasError = () => (
-    this.state.error !== ''
+  hasErrorMessage = () => (
+    this.props.errorMessage !== ''
+  )
+
+  hasSuccessMessage = () => (
+    this.props.successMessage !== ''
   )
 
   render() {
@@ -47,21 +51,35 @@ class SearchPage extends React.Component {
           clearSearchResults={this.clearSearchResults}
           />
         {
-          this.hasError() ? (
-            <div className="error" style={{
-              paddingTop: "80px"
-            }}>
-              {this.state.error}
+          this.hasSuccessMessage() && (
+            <div className="success">
+              {this.props.successMessage}
+            </div>
+
+          )
+        }
+        {
+          this.hasErrorMessage() ? (
+            <div className="error">
+              {this.props.errorMessage}
             </div>
           ) : (
             <SearchResults
               searchResults={this.state.searchResults}
+              updateSuccessMessage={this.props.updateSuccessMessage}
             />
           )
         }
       </div>
     )
   }
+}
+
+SearchPage.propTypes = {
+  updateSuccessMessage: PropTypes.func,
+  successMessage: PropTypes.string,
+  updateErrorMessage: PropTypes.func,
+  errorMessage: PropTypes.string
 }
 
 export default SearchPage

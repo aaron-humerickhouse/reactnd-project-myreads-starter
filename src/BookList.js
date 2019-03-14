@@ -11,7 +11,7 @@ class BookList extends React.Component {
           Array.isArray(this.props.books) && (
             this.props.books.map(book => (
               <li key={book.id}>
-                <Book book={book} />
+                <Book book={book} updateSuccessMessage={this.props.updateSuccessMessage} />
               </li>
             ))
           )
@@ -30,6 +30,7 @@ BookList.propTypes = {
   //   })
   // ]).isRequired,
   books: PropTypes.any.isRequired,
+  updateSuccessMessage: PropTypes.func
 }
 
 export default BookList

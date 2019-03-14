@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import Menu from './Menu';
 import * as customPropTypes from './types';
 
@@ -15,7 +17,7 @@ class Book extends React.Component {
               backgroundImage: `url(${book.imageLinks.smallThumbnail})`
             }}>
           </div>
-          <Menu />
+          <Menu book={book} updateSuccessMessage={this.props.updateSuccessMessage} />
         </div>
         <div className="book-title">{book.title}</div>
         <div className="book-authors">
@@ -33,7 +35,8 @@ class Book extends React.Component {
 }
 
 Book.propTypes = {
-  book: customPropTypes.bookPropType
+  book: customPropTypes.bookPropType.isRequired,
+  updateSuccessMessage: PropTypes.func
 }
 
 export default Book

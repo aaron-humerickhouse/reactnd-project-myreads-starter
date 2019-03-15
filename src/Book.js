@@ -21,10 +21,12 @@ class Book extends React.Component {
       shelf = constants.WANT_TO_READ;
     } else if (this.bookInShelf(shelves.currentlyReading)) {
       shelf = constants.CURRENTLY_READING;
+    } else {
+      shelf = constants.NONE;
     }
 
     this.setState(() => ({
-      shelf,
+      shelf: shelf
     }));
   }
 
@@ -37,7 +39,7 @@ class Book extends React.Component {
 
     return shelf.filter(id => (
       book.id === id
-    ).length) > 0;
+    )).length > 0;
   }
 
   render() {

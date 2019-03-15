@@ -38,8 +38,8 @@ class Menu extends React.Component {
     BooksApi.update(book, shelf)
       .then(() => {
         updateSuccessMessage(this.getActionMessage(book, shelf));
+        addBookToShelf(book, shelf);
       });
-    addBookToShelf(book, shelf);
   }
 
   render() {

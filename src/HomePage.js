@@ -41,27 +41,18 @@ class HomePage extends React.Component {
               {successMessage}
             </div>
           )}
-          <BookShelf
-            books={this.filterBooks(Constants.CURRENTLY_READING)}
-            title="Currently Reading"
-            updateSuccessMessage={this.updateSuccessMessage}
-            shelves={shelves}
-            addBookToShelf={addBookToShelf}
-          />
-          <BookShelf
-            books={this.filterBooks(Constants.WANT_TO_READ)}
-            title="Want to Read"
-            updateSuccessMessage={this.updateSuccessMessage}
-            shelves={shelves}
-            addBookToShelf={addBookToShelf}
-          />
-          <BookShelf
-            books={this.filterBooks(Constants.READ)}
-            title="READ"
-            updateSuccessMessage={this.updateSuccessMessage}
-            shelves={shelves}
-            addBookToShelf={addBookToShelf}
-          />
+          {
+            Constants.SHELVES.map(shelf => (
+              <BookShelf
+                key={shelf.value}
+                books={this.filterBooks(shelf.value)}
+                title={shelf.title}
+                updateSuccessMessage={this.updateSuccessMessage}
+                shelves={shelves}
+                addBookToShelf={addBookToShelf}
+              />
+            ))
+          }
         </div>
         <div className="open-search">
           <Link to="/search">
